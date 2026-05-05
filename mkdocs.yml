@@ -27,6 +27,7 @@ theme:
     - navigation.sections
     - navigation.expand
     - content.code.copy
+    - toc.integrate
     - search.suggest
 
 plugins:
@@ -49,14 +50,16 @@ markdown_extensions:
 
 nav:
   - 홈: index.md
-  - 빠른 시작: quickstart.md
-  - CLI: cli.md
-  - 캐싱: caching.md
-  - 로깅: logging.md
-  - Cookbook:
-      - 시작하기: cookbook/getting-started.md
-      - 데이터셋 탐색: cookbook/discovery.md
-      - Raw 접근: cookbook/raw-access.md
+  - 시작하기:
+      - 빠른 시작: quickstart.md
+      - CLI: cli.md
+  - 가이드:
+      - 캐싱: caching.md
+      - 로깅: logging.md
+      - Cookbook:
+          - 시작하기: cookbook/getting-started.md
+          - 데이터셋 탐색: cookbook/discovery.md
+          - Raw 접근: cookbook/raw-access.md
   - Providers:
       - 공공데이터포털 (datago): providers/datago.md
       - 서울 열린데이터광장: providers/seoul.md
@@ -71,3 +74,5 @@ nav:
       - "0002: UX 표준화": adrs/0002-standardize-ux-not-native-shape.md
   - 튜토리얼:
       - AI 에이전트 워크플로우: tutorial-ai-agent-workflow.md
+  - 기여:
+      - 기여 가이드: contributing.md
