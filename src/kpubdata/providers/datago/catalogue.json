@@ -442,6 +442,24 @@
     }
   },
   {
+    "dataset_key": "road_traffic",
+    "name": "국토교통부 실시간 도로교통정보 (Real-time Road Traffic Info)",
+    "base_url": "https://openapi.its.go.kr:9443",
+    "default_operation": "trafficInfo",
+    "envelope_style": "its_flat",
+    "representation": "api_json",
+    "service_key_param": "apiKey",
+    "format_param": "getType",
+    "description": "ITS National Transport Information Center real-time road traffic flow (speed, travel time, congestion)",
+    "tags": ["transportation", "traffic", "realtime"],
+    "source_url": "https://www.data.go.kr/data/15040463/openapi.do",
+    "operations": ["list", "raw"],
+    "query_support": {
+      "pagination": "offset",
+      "max_page_size": 1000
+    }
+  },
+  {
     "dataset_key": "generic",
     "name": "범용 data.go.kr 엔드포인트 (Generic Endpoint)",
     "representation": "api_json",
