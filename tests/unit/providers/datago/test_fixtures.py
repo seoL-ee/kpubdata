@@ -406,6 +406,36 @@ def test_fixture_social_enterprise_parses() -> None:
     assert batch.total_count == 4783
 
 
+def test_fixture_road_traffic_call_raw_returns_full_envelope() -> None:
+    adapter, dataset = _build_real_estate_adapter("success_road_traffic.json", "road_traffic")
+    expected = load_json_fixture("success_road_traffic.json")
+
+    payload = adapter.call_raw(dataset, "trafficInfo", {"type": "all", "drcType": "all"})
+
+    assert payload == expected
+    payload_dict = cast(dict[str, object], payload)
+    assert payload_dict["resultCode"] == "00"
+    items = payload_dict["items"]
+    assert isinstance(items, list)
+    assert len(items) == 3
+    first = items[0]
+    assert isinstance(first, dict)
+    assert first["roadName"] == "경부고속도로"
+    assert first["linkId"] == "1610038501"
+
+
+def test_fixture_road_traffic_list_parses_flat_envelope() -> None:
+    adapter, dataset = _build_real_estate_adapter("success_road_traffic.json", "road_traffic")
+
+    batch = adapter.query_records(dataset, Query())
+
+    assert len(batch.items) == 3
+    assert batch.items[0]["roadName"] == "경부고속도로"
+    assert "speed" in batch.items[0]
+    assert "travelTime" in batch.items[0]
+    assert batch.total_count == 3
+
+
 def test_fixture_g2b_catalog_parses() -> None:
     adapter, dataset = _build_real_estate_adapter("success_g2b_catalog.json", "g2b_catalog")
 
