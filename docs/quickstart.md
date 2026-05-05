@@ -179,5 +179,5 @@ print(df)
 
 ## 다음 단계
 - 각 Provider별 상세 사용법: [docs/providers/](./providers/) 폴더
-- 프로젝트에 기여하기: [CONTRIBUTING.md](../CONTRIBUTING.md)
-- 전체 API 명세: [API_SPEC.md](../API_SPEC.md)
+- 프로젝트에 기여하기: [CONTRIBUTING.md](contributing.md)
+- 전체 API 명세: [API_SPEC.md](https://github.com/yeongseon/kpubdata/blob/main/API_SPEC.md)
