@@ -130,3 +130,37 @@ def test_dur_older_adult_caution_dataset_contract_query_and_raw() -> None:
     assert len(batch.items) == 2
     assert all(isinstance(item, dict) for item in batch.items)
     assert raw is not None
+
+
+def test_dur_er_tablet_split_caution_dataset_contract_metadata() -> None:
+    adapter = _build_adapter(["success_dur_er_tablet_split_caution.json"])
+
+    dataset = adapter.get_dataset("dur_er_tablet_split_caution")
+
+    assert dataset.id == "datago.dur_er_tablet_split_caution"
+    assert Operation.LIST in dataset.operations
+    assert Operation.RAW in dataset.operations
+    assert dataset.query_support is not None
+    assert dataset.query_support.pagination is PaginationMode.OFFSET
+
+
+def test_dur_er_tablet_split_caution_dataset_contract_query_and_raw() -> None:
+    adapter = _build_adapter(
+        [
+            "success_dur_er_tablet_split_caution.json",
+            "success_dur_er_tablet_split_caution.json",
+        ]
+    )
+    dataset = adapter.get_dataset("dur_er_tablet_split_caution")
+
+    batch = adapter.query_records(dataset, Query(filters={"itemName": "샘플"}))
+    raw = adapter.call_raw(
+        dataset,
+        "getSeobangjeongPartitnAtentInfoList03",
+        {"itemName": "샘플"},
+    )
+
+    assert batch.dataset is dataset
+    assert len(batch.items) == 2
+    assert all(isinstance(item, dict) for item in batch.items)
+    assert raw is not None
