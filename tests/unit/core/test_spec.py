@@ -96,7 +96,7 @@ def test_from_mapping_license_parsed() -> None:
         },
     }
     spec = from_mapping(data)
-    assert spec.license is not None
+    assert isinstance(spec.license, LicenseSpec)
     assert spec.license.type == "공공누리_1유형"
     assert spec.license.commercial_use is True
     assert spec.license.attribution_required is True
