@@ -59,7 +59,7 @@
 
 - id: datago.sh_trade
   category: 부동산
-  title: 연립다세대 매매 실거래가
+  title: 단독/다가구 매매 실거래가
   demand: 3
   pain: 4
   openness: 5
@@ -69,7 +69,7 @@
 
 - id: datago.sh_rent
   category: 부동산
-  title: 연립다세대 전월세 실거래가
+  title: 단독/다가구 전월세 실거래가
   demand: 3
   pain: 4
   openness: 5
@@ -79,7 +79,7 @@
 
 - id: datago.rh_rent
   category: 부동산
-  title: 단독/다가구 전월세 실거래가
+  title: 연립다세대 전월세 실거래가
   demand: 3
   pain: 4
   openness: 5
@@ -268,9 +268,9 @@
   total: 19
   status: catalogue
 
-- id: bok.exchange_rate
+- id: bok.usd_krw
   category: 거시경제
-  title: 환율
+  title: 원/달러 환율
   demand: 5
   pain: 4
   openness: 5
@@ -291,7 +291,7 @@
 # ──────────────────────────────────────────────
 # 법률 (Law) — catalogue only
 # ──────────────────────────────────────────────
-- id: law.search
+- id: law.law_search
   category: 법률
   title: 법령 검색
   demand: 4
@@ -304,7 +304,7 @@
 # ──────────────────────────────────────────────
 # 지리 (Geography) — catalogue only
 # ──────────────────────────────────────────────
-- id: sgis.sido_boundary
+- id: sgis.boundary.sido
   category: 지리
   title: 시도 행정구역 경계
   demand: 4
@@ -326,7 +326,7 @@
   stability: 4
   total: 14
   status: catalogue
-  note: 상업적 재배포 시 KRX 별도 계약 필요
+  note: 제3자 제공·재배포 제한, 상업적 이용 시 KRX 별도 계약 필요 (라이선스 검토 중 — #440)
 
 # ──────────────────────────────────────────────
 # 추가 예정 (Planned) — 높은 우선순위
@@ -349,7 +349,7 @@
   openness: 5
   stability: 4
   total: 19
-  status: planned
+  status: catalogue
 
 - id: datago.mid_fcst
   category: 기상
@@ -359,7 +359,7 @@
   openness: 5
   stability: 5
   total: 19
-  status: planned
+  status: catalogue
 
 - id: datago.pharmacy_info
   category: 의료
@@ -389,4 +389,4 @@
   openness: 5
   stability: 4
   total: 18
-  status: planned
+  status: catalogue
