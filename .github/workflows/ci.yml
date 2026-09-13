@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -45,10 +46,56 @@ jobs:
       - name: Validate dataset specs
         run: uv run python scripts/validate_spec.py
 
+      - name: Contract replay verify
+        run: make verify
+
       - name: Generated docs drift check
         run: |
           uv run python scripts/gen_docs_examples.py --check
           uv run python scripts/gen_readme_datasets.py --check
+
+  spec-changes:
+    name: Spec Change Summary
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed specs
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'src/kpubdata/specs/**/*.yaml' | sort)
+          if [ -z "$CHANGED" ]; then
+            echo "specs=" >> "$GITHUB_OUTPUT"
+            echo "No spec files changed."
+          else
+            echo "specs<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$CHANGED" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+            echo "Changed specs:"
+            echo "$CHANGED"
+          fi
+
+      - name: Comment PR with changed datasets
+        if: steps.changed.outputs.specs != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const specs = `${{ steps.changed.outputs.specs }}`;
+            const datasets = specs.trim().split('\n').map(f => {
+              const m = f.match(/specs\/(\w+)\/(\w+)\.yaml$/);
+              return m ? `\`${m[1]}.${m[2]}\`` : f;
+            });
+            const body = `### Spec datasets changed in this PR\n\n${datasets.map(d => `- ${d}`).join('\n')}\n\n_Verify these datasets pass \`make verify\` before merging._`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
 
   test:
     name: Test (Python ${{ matrix.python-version }})
