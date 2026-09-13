@@ -1,8 +1,9 @@
 # KPubData — Korea Public Data
 
-**KPubData (Korea Public Data)**는 한국 공공데이터라는 거대한 도서관에서 책을 찾아주는 **똑똑한 사서**와 같은 역할을 하는 [파이썬(Python)](https://docs.python.org/ko/3/tutorial/index.html) 프레임워크입니다.
+**KPubData is the access layer for Korean public data.**
+Discover, query, and integrate Korea's most useful public datasets through one consistent [Python](https://docs.python.org/ko/3/tutorial/index.html) interface.
 
-공공데이터 포털의 수많은 [API](https://ko.wikipedia.org/wiki/API)(프로그램끼리 데이터를 주고받는 규칙)는 저마다 호출 방식도, 응답 형식도 제각각입니다. KPubData는 이러한 파편화된 인터페이스를 하나로 연결하여, 개발자가 일관된 방식으로 데이터를 탐색하고 수집할 수 있도록 돕습니다.
+공공데이터 포털의 수많은 [API](https://ko.wikipedia.org/wiki/API)(프로그램끼리 데이터를 주고받는 규칙)는 저마다 인증 방식, 응답 형식, 페이지 처리가 제각각입니다. KPubData는 이러한 차이를 어댑터가 흡수하여, 개발자가 일관된 방식으로 데이터를 탐색하고 수집할 수 있도록 돕습니다. 사용자의 공식 API 키를 그대로 사용하는 SDK 구조이므로, 데이터를 소유하거나 재배포하지 않습니다.
 
 <!-- BEGIN: datasets -->
 
@@ -469,11 +470,11 @@ KPubData의 설계 철학과 사용 방법을 안내하는 문서 목록입니�
 ## 관련 문서
 
 ### KPubData Product Family
-| 패키지 | 역할 |
-| :--- | :--- |
-| [kpubdata](https://github.com/yeongseon/kpubdata) | 한국 공공데이터 접근 + 파싱 + 정규화 코어 |
-| [kpubdata-builder](https://github.com/yeongseon/kpubdata-builder) | 데이터셋 조립 + 내보내기 파이프라인 |
-| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | 빌드 작성 및 실행을 위한 시각적 인터페이스 |
+| 패키지 | 역할 | 설명 |
+| :--- | :--- | :--- |
+| [kpubdata](https://github.com/yeongseon/kpubdata) | **Access** | 한국 공공데이터 접근 + 파싱 + 정규화 코어 SDK |
+| [kpubdata-builder](https://github.com/yeongseon/kpubdata-builder) | **Generation** | 데이터셋 조립 + 검증 + 내보내기 파이프라인 |
+| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | **Discovery** | 빌드 작성 및 실행을 위한 시각적 인터페이스 |
 
 ## 로드맵
 
