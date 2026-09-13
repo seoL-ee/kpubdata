@@ -16,7 +16,7 @@ Discover, query, and integrate Korea's most useful public datasets through one c
 | `datago.air_station` | 실API 2026-09-09 |
 | `datago.airkorea_forecast` | 실API 2026-09-09 |
 | `datago.apt_rent` | 실API 2026-09-09 |
-| `datago.apt_trade` | 실API 2026-09-11 |
+| `datago.apt_trade` | 실API 2026-09-12 |
 | `datago.hospital_info` | 실API 2026-09-09 |
 | `datago.metro_fare` | 실API 2026-09-09 |
 | `datago.offi_rent` | 실API 2026-09-09 |
