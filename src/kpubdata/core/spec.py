@@ -223,18 +223,30 @@ def _parse_license(raw: object, problems: list[str]) -> LicenseSpec | None:
     if not isinstance(raw, dict):
         problems.append("license는 객체여야 합니다.")
         return None
+    def _str_field(key: str) -> str | None:
+        val = raw.get(key)
+        if val is None:
+            return None
+        if not isinstance(val, str):
+            problems.append(f"license.{key}은(는) 문자열이어야 합니다: {type(val).__name__}")
+            return None
+        return val
+
+    def _bool_field(key: str) -> bool | None:
+        val = raw.get(key)
+        if val is None:
+            return None
+        if not isinstance(val, bool):
+            problems.append(f"license.{key}은(는) boolean이어야 합니다: {type(val).__name__}")
+            return None
+        return val
+
     return LicenseSpec(
-        type=raw.get("type") if isinstance(raw.get("type"), str) else None,
-        commercial_use=raw.get("commercial_use")
-        if isinstance(raw.get("commercial_use"), bool)
-        else None,
-        attribution_required=raw.get("attribution_required")
-        if isinstance(raw.get("attribution_required"), bool)
-        else None,
-        modification_allowed=raw.get("modification_allowed")
-        if isinstance(raw.get("modification_allowed"), bool)
-        else None,
-        note=raw.get("note") if isinstance(raw.get("note"), str) else None,
+        type=_str_field("type"),
+        commercial_use=_bool_field("commercial_use"),
+        attribution_required=_bool_field("attribution_required"),
+        modification_allowed=_bool_field("modification_allowed"),
+        note=_str_field("note"),
     )
 
 
@@ -611,6 +623,7 @@ __all__ = [
     "ExampleSpec",
     "FieldSpec",
     "FormatParamSpec",
+    "LicenseSpec",
     "PaginationSpec",
     "ParamSpec",
     "ResponseSpec",
