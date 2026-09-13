@@ -62,8 +62,9 @@ class TestKpubdataPipelineE2E:
 
         assert batch.items, "강남구 2024-01 거래 데이터 필요"
         for item in batch.items:
-            assert str(item.get("sggCd", "")).startswith("11110"), \
+            assert str(item.get("sggCd", "")).startswith("11110"), (
                 f"LAWD_CD 필터 위반: sggCd={item.get('sggCd')}"
+            )
 
     def test_air_station_station_filter(self) -> None:
         """측정소별 대기: station 필터 → 측정소 일치 검증."""
