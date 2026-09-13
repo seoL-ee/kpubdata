@@ -319,4 +319,6 @@ def test_krx_datasets_contain_license_note() -> None:
         ds_ref = next(d for d in client.datasets.list(provider="krx") if d.id == ds_id)
         note = ds_ref.raw_metadata.get("license_note")
         assert note is not None, f"{ds_id}에 license_note가 없습니다"
-        assert "KRX" in note or "재배포" in note, f"{ds_id}의 license_note가 경고를 포함하지 않습니다"
+        assert "KRX" in note or "재배포" in note, (
+            f"{ds_id}의 license_note가 경고를 포함하지 않습니다"
+        )
