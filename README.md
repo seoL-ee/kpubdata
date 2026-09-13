@@ -7,7 +7,7 @@ Discover, query, and integrate Korea's most useful public datasets through one c
 
 <!-- BEGIN: datasets -->
 
-- **spec 기반 데이터셋**: 22종 — `make verify` 4단계 기계 검증 통과
+- **spec 기반 데이터셋**: 23종 — `make verify` 4단계 기계 검증 통과
 - **catalogue 기반 데이터셋**: 149종 (bok 4, datago 40, fds 1, kipris 1, korean 1, kosis 2, krx 3, law 3, localdata 59, lofin 6, neis 2, semas 17, seoul 7, sgis 3)
 
 | spec 데이터셋 | 검증 |
@@ -19,6 +19,7 @@ Discover, query, and integrate Korea's most useful public datasets through one c
 | `datago.apt_trade` | 실API 2026-09-12 |
 | `datago.hospital_info` | 실API 2026-09-09 |
 | `datago.metro_fare` | 실API 2026-09-09 |
+| `datago.ocean_buoy` | 실API - |
 | `datago.offi_rent` | 실API 2026-09-09 |
 | `datago.offi_trade` | 실API 2026-09-09 |
 | `datago.rh_rent` | 실API 2026-09-09 |
