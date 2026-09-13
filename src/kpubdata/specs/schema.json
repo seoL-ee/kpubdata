@@ -378,6 +378,33 @@
         }
       }
     },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "데이터 이용 허락 조건. 공공누리 유형 등 라이선스 정보를 명시한다.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "라이선스 유형. 예: 공공누리_1유형, 공공누리_2유형, KRX_별도계약, 자유이용"
+        },
+        "commercial_use": {
+          "type": "boolean",
+          "description": "상업적 이용 가능 여부"
+        },
+        "attribution_required": {
+          "type": "boolean",
+          "description": "출처 표시 의무 여부"
+        },
+        "modification_allowed": {
+          "type": "boolean",
+          "description": "변경 허용 여부"
+        },
+        "note": {
+          "type": "string",
+          "description": "라이선스 관련 부가 설명"
+        }
+      }
+    },
     "status": {
       "enum": [
         "active",

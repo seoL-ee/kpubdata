@@ -5,8 +5,10 @@ from pathlib import Path
 import pytest
 
 from kpubdata.core.spec import (
+    LicenseSpec,
     discover_specs,
     find_spec,
+    from_mapping,
     load_spec_file,
     spec_index,
 )
@@ -68,6 +70,85 @@ def test_from_mapping_full_sections() -> None:
 
     # 미선언 키는 raw_metadata에 보존된다(상위 호환).
     assert spec.raw_metadata.get("custom_future_field") == "보존되어야 하는 미선언 키"
+
+
+def test_from_mapping_license_parsed() -> None:
+    """license 섹션이 LicenseSpec으로 올바르게 변환된다."""
+    data: dict[str, object] = {
+        "id": "test.lic",
+        "provider": "test",
+        "title": "라이선스 테스트",
+        "endpoint": {"base_url": "https://example.test/api", "operation": "op", "method": "GET"},
+        "auth": {"type": "none"},
+        "response": {
+            "format": "json",
+            "envelope": "datago_standard",
+            "error": {"style": "http_status"},
+        },
+        "pagination": {"type": "none"},
+        "status": "active",
+        "license": {
+            "type": "공공누리_1유형",
+            "commercial_use": True,
+            "attribution_required": True,
+            "modification_allowed": True,
+            "note": "자유이용",
+        },
+    }
+    spec = from_mapping(data)
+    assert isinstance(spec.license, LicenseSpec)
+    assert spec.license.type == "공공누리_1유형"
+    assert spec.license.commercial_use is True
+    assert spec.license.attribution_required is True
+    assert spec.license.modification_allowed is True
+    assert spec.license.note == "자유이용"
+
+
+def test_from_mapping_license_bad_type_drops_value() -> None:
+    """license 필드의 잘못된 타입은 None으로 처리된다."""
+    data: dict[str, object] = {
+        "id": "test.lic2",
+        "provider": "test",
+        "title": "타입 오류",
+        "endpoint": {"base_url": "https://example.test/api", "operation": "op", "method": "GET"},
+        "auth": {"type": "none"},
+        "response": {
+            "format": "json",
+            "envelope": "datago_standard",
+            "error": {"style": "http_status"},
+        },
+        "pagination": {"type": "none"},
+        "status": "active",
+        "license": {
+            "type": "공공누리_1유형",
+            "commercial_use": "true",  # 문자열 — bool이어야 함
+        },
+    }
+    spec = from_mapping(data)
+    assert spec.license is not None
+    assert spec.license.type == "공공누리_1유형"
+    # 잘못된 타입("true" 문자열)은 None으로 처리됨
+    assert spec.license.commercial_use is None
+
+
+def test_from_mapping_license_none_when_absent() -> None:
+    """license 섹션이 없으면 None이다."""
+    data: dict[str, object] = {
+        "id": "test.nolic",
+        "provider": "test",
+        "title": "없음",
+        "endpoint": {"base_url": "https://example.test/api", "operation": "op", "method": "GET"},
+        "auth": {"type": "none"},
+        "response": {
+            "format": "json",
+            "envelope": "datago_standard",
+            "error": {"style": "http_status"},
+        },
+        "pagination": {"type": "none"},
+        "status": "active",
+    }
+    spec = from_mapping(data)
+    assert spec.license is None
 
 
 def test_from_mapping_invalid_id_format() -> None:
