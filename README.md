@@ -474,7 +474,7 @@ KPubData의 설계 철학과 사용 방법을 안내하는 문서 목록입니�
 | :--- | :--- | :--- |
 | [kpubdata](https://github.com/yeongseon/kpubdata) | **Access** | 한국 공공데이터 접근 + 파싱 + 정규화 코어 SDK |
 | [kpubdata-builder](https://github.com/yeongseon/kpubdata-builder) | **Generation** | 데이터셋 조립 + 검증 + 내보내기 파이프라인 |
-| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | **Discovery** | 빌드 작성 및 실행을 위한 시각적 인터페이스 |
+| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | **Experience** | 빌드 작성 및 실행을 위한 시각적 인터페이스 |
 
 ## 로드맵
 

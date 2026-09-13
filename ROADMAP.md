@@ -67,7 +67,7 @@ Provider expansion.
 ## v1.0 criteria
 
 - public API feels stable
-- **production-grade spec 데이터셋 50개 이상** (Verified Data Contract 통과)
+- **production-grade spec 데이터셋 50개 이상** (`make verify` 4단계 기계 검증 + 실API 검증 통과)
 - adapter contract proven across multiple provider families (7+ providers)
 - plugin discovery로 외부 provider 패키지 등록 가능
 - docs/examples sufficient for external users
@@ -101,4 +101,4 @@ Provider expansion.
 | :--- | :--- | :--- |
 | [kpubdata](https://github.com/yeongseon/kpubdata) | **Access** — 데이터 접근 프레임워크 | 이 문서 |
 | [kpubdata-builder](https://github.com/yeongseon/kpubdata-builder) | **Generation** — 데이터셋 생성/검증/퍼블리싱 | [ROADMAP.md](https://github.com/yeongseon/kpubdata-builder/blob/main/ROADMAP.md) |
-| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | **Discovery** — 탐색/경험 UI | [ROADMAP.md](https://github.com/yeongseon/kpubdata-studio/blob/main/ROADMAP.md) |
+| [kpubdata-studio](https://github.com/yeongseon/kpubdata-studio) | **Experience** — 빌드 작성/실행 시각적 인터페이스 | [ROADMAP.md](https://github.com/yeongseon/kpubdata-studio/blob/main/ROADMAP.md) |
