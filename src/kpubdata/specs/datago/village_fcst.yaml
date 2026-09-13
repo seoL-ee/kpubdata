@@ -112,3 +112,8 @@ examples:
   page_size: 100
 status: active
 last_verified: '2026-09-09'
+license:
+  type: 공공누리_1유형
+  commercial_use: true
+  attribution_required: true
+  modification_allowed: true

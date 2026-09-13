@@ -163,6 +163,17 @@ class ExampleSpec:
 
 
 @dataclass(slots=True, frozen=True)
+class LicenseSpec:
+    """데이터 이용 허락 조건 선언."""
+
+    type: str | None = None
+    commercial_use: bool | None = None
+    attribution_required: bool | None = None
+    modification_allowed: bool | None = None
+    note: str | None = None
+
+
+@dataclass(slots=True, frozen=True)
 class SpecDefinition:
     """검증된 데이터셋 spec 정의."""
 
@@ -180,6 +191,7 @@ class SpecDefinition:
     fields: tuple[FieldSpec, ...] = ()
     examples: tuple[ExampleSpec, ...] = ()
     last_verified: date | None = None
+    license: LicenseSpec | None = None
     raw_metadata: dict[str, object] = field(default_factory=dict)
 
     @property
@@ -202,6 +214,28 @@ def _parse_date(value: object, problems: list[str], label: str) -> date | None:
             return None
     problems.append(f"{label}은(는) 문자열 또는 null이어야 합니다: {type(value).__name__}")
     return None
+
+
+def _parse_license(raw: object, problems: list[str]) -> LicenseSpec | None:
+    """license 섹션을 LicenseSpec으로 변환한다."""
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        problems.append("license는 객체여야 합니다.")
+        return None
+    return LicenseSpec(
+        type=raw.get("type") if isinstance(raw.get("type"), str) else None,
+        commercial_use=raw.get("commercial_use")
+        if isinstance(raw.get("commercial_use"), bool)
+        else None,
+        attribution_required=raw.get("attribution_required")
+        if isinstance(raw.get("attribution_required"), bool)
+        else None,
+        modification_allowed=raw.get("modification_allowed")
+        if isinstance(raw.get("modification_allowed"), bool)
+        else None,
+        note=raw.get("note") if isinstance(raw.get("note"), str) else None,
+    )
 
 
 def _parse_params(raw: object, problems: list[str]) -> tuple[ParamSpec, ...]:
@@ -499,6 +533,7 @@ def from_mapping(data: dict[str, object]) -> SpecDefinition:
         fields=tuple(fields_parsed),
         examples=tuple(examples_parsed),
         last_verified=_parse_date(data.get("last_verified"), problems, "last_verified"),
+        license=_parse_license(data.get("license"), problems),
         raw_metadata=dict(data),
     )
 
