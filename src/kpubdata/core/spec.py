@@ -223,6 +223,7 @@ def _parse_license(raw: object, problems: list[str]) -> LicenseSpec | None:
     if not isinstance(raw, dict):
         problems.append("license는 객체여야 합니다.")
         return None
+
     def _str_field(key: str) -> str | None:
         val = raw.get(key)
         if val is None:
