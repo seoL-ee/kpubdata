@@ -103,4 +103,5 @@ examples:
     obsCode: TW_0089
   page: 1
   page_size: 10
-status: active
+status: unstable
+# 활용신청 승인 후 fixture 생성 + 실API 검증 → active 전환 예정
