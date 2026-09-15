@@ -156,8 +156,15 @@ def run_verify(dataset_id: str | None = None) -> int:
             print(validate.stderr.rstrip())
         return 1
 
+    # unstable/broken status인 spec은 fixture·예제 검증을 건너뛴다 —
+    # 활용신청 미승인 등으로 fixture 생성이 불가능한 경우다.
+    skippable = frozenset({"unstable", "broken"})
+
     failed_any = False
     for spec in specs:
+        if not dataset_id and spec.status in skippable:
+            print(f"[건너뜀] {spec.id} (status={spec.status})")
+            continue
         result = DatasetVerifyResult(dataset_id=spec.id)
         result.steps.extend(_verify_fixtures(spec))
         result.steps.append(_run_example_script(spec))
