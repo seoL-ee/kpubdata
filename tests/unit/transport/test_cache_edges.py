@@ -186,7 +186,7 @@ def test_key_separates_different_urls_methods_and_values() -> None:
     assert base != make_cache_key("GET", "https://x.test/r", {"page": "2"}, None)
 
 
-def test_key_distinguishes_absent_from_empty_parameters() -> None:
+def test_key_treats_absent_and_empty_parameters_as_one_request() -> None:
     """None 과 {} 는 같은 요청이다 — 둘을 다른 엔트리로 쪼개 캐시를 반으로 나누지 않는다."""
     assert make_cache_key("GET", "https://x.test/r", None, None) == make_cache_key(
         "GET", "https://x.test/r", {}, None
@@ -250,12 +250,14 @@ def test_clear_expired_survives_one_unreadable_entry(tmp_path: Path) -> None:
     cache = ResponseCache(base_dir=tmp_path)
     # 디렉터리를 .json 이름으로 두면 read_text 가 IsADirectoryError 를 던진다.
     (tmp_path / "unreadable.json").mkdir()
-    _ = _write_raw(cache, "stale", _entry(created_at=0.0, ttl=1.0))
+    stale = _write_raw(cache, "stale", _entry(created_at=0.0, ttl=1.0))
 
     cache.clear_expired()
 
     assert (tmp_path / "unreadable.json").exists()
-    assert cache.get("stale") is None
+    # 만료 엔트리가 디스크에서 사라졌는지를 본다. ``cache.get`` 은 정리가 중간에
+    # 멈췄더라도 실제 시계 기준으로 이미 만료라 None 을 주므로 아무것도 증명하지 못한다.
+    assert not stale.exists()
 
 
 def test_delete_failure_still_reports_a_miss(

@@ -39,6 +39,17 @@ _ADAPTERS = [
     pytest.param(SemasAdapter, "semas", id="semas"),
 ]
 
+# data.go.kr 키가 붙을 수 있는 env var. ``KPubDataConfig(provider_keys={})`` 는 키가
+# "없는" 설정이 아니다 — ``get_provider_key`` 가 이 둘을 차례로 본다(config.py). 지우지
+# 않으면 키를 export 해 둔 개발자 머신에서만 "요청 전에 막는다" 테스트가 실패한다.
+_KEY_ENV_VARS = ("KPUBDATA_DATAGO_API_KEY", "DATAGO_API_KEY")
+
+
+@pytest.fixture(autouse=True)
+def _no_ambient_api_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    for var in _KEY_ENV_VARS:
+        monkeypatch.delenv(var, raising=False)
+
 
 class _FakeResponse:
     def __init__(self, payload: object, *, content_type: str = "application/json") -> None:
